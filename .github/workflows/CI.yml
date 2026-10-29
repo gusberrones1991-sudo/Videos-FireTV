@@ -4,6 +4,9 @@ on:
   push:
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -35,3 +38,11 @@ jobs:
         with:
           name: Videos-APK
           path: smarttubetv/build/outputs/apk/stvideos/release/*.apk
+
+      - name: Publicar APK
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cp smarttubetv/build/outputs/apk/stvideos/release/*armeabi-v7a.apk Videos.apk
+          gh release delete videos --yes --cleanup-tag || true
+          gh release create videos Videos.apk --title "Videos para Fire TV" --notes "APK de Videos para Fire TV" --latest
