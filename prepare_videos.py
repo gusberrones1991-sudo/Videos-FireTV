@@ -116,6 +116,7 @@ if 'stvideos' not in s:
             applicationId "com.gus.videos"
             targetSdkVersion project.properties.compileSdkVersion
             signingConfig signingConfigs.debug
+            matchingFallbacks = ['ststable']
         }
 ''' + a, 1)
     s = s.replace('def project = "SmartTube"', 'def project = variant.productFlavors[-1].name == "stvideos" ? "Videos" : "SmartTube"', 1)
